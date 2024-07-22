@@ -1,13 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
 @charset "UTF-8";
-
-@layer components {
-    .custom-text-button {
-        @apply text-gray003 text-xl font-semibold;
-    }
-}
 
 html,
 body {
@@ -22,7 +13,7 @@ body {
     -webkit-text-size-adjust: none;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    background-color: #292e33;
+    background: linear-gradient(45deg, #f4aa7e, #ed625f);
 }
 div,
 dl,

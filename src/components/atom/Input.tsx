@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LimitText from "./LimitText";
+import { EToastType, showToast } from "Toast";
 
 interface IInputProps {
     placeholder?: string;
@@ -12,9 +13,18 @@ interface IInputProps {
 
 const Input = ({ placeholder, value, minLength, maxLength, onChange }: IInputProps) => {
     const [inputValue, setInputValue] = useState<string>(value);
+    const [showToastOnce, setShowToastOnce] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (inputValue.length >= maxLength && !showToastOnce) {
+            showToast({ type: EToastType.ERROR, message: `닉네임은 ${maxLength}자 이하로 입력 가능합니다.` });
+            setShowToastOnce(true);
+        }
+    }, [inputValue, maxLength, showToastOnce]);
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setInputValue(event.target.value);
+        setShowToastOnce(false);
         onChange(event);
     };
 
@@ -25,7 +35,7 @@ const Input = ({ placeholder, value, minLength, maxLength, onChange }: IInputPro
                 placeholder={placeholder}
                 value={inputValue}
                 minLength={minLength}
-                maxLength={maxLength}
+                maxLength={maxLength - 1}
                 onChange={handleChange}
             />
             <LimitText valueLength={inputValue.length} maxLength={maxLength} />

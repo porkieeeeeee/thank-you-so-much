@@ -6,6 +6,7 @@ import Button from "components/atom/Button";
 import FormTitle from "components/atom/FormTitle";
 import Input from "components/atom/Input";
 import TextArea from "components/atom/TextArea";
+import { EToastType, showToast } from "Toast";
 
 const FormLayout = () => {
     const [nickname, setNickname] = useState<string>("");
@@ -13,9 +14,15 @@ const FormLayout = () => {
     const navigate = useNavigate();
 
     const HandleClickSubmit = async () => {
+        if (nickname.trim() === "" || message.trim() === "") {
+            showToast({ type: EToastType.ERROR, message: "빈칸은 입력할 수 없습니다." });
+            return;
+        }
+
         const success = await postData(nickname, message, setNickname, setMessage);
         if (success) {
             navigate("/");
+            showToast({ type: EToastType.SUCCESS, message: "응원해주셔서 감사합니다!" });
         }
     };
 
@@ -27,14 +34,14 @@ const FormLayout = () => {
                     placeholder='닉네임을 입력해주세요'
                     value={nickname}
                     minLength={1}
-                    maxLength={5}
+                    maxLength={6}
                     onChange={(e) => setNickname(e.target.value)}
                 />
                 <TextArea
                     placeholder='ex. 포키 화이팅'
                     value={message}
                     minLength={1}
-                    maxLength={999}
+                    maxLength={500}
                     onChange={(e) => setMessage(e.target.value)}
                 />
             </Wrapper>

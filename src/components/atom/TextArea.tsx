@@ -1,6 +1,7 @@
 import styled from "@emotion/styled";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LimitText from "./LimitText";
+import { EToastType, showToast } from "Toast";
 
 interface ITextAreaProps {
     placeholder?: string;
@@ -12,9 +13,18 @@ interface ITextAreaProps {
 
 const TextArea = ({ placeholder, value, minLength, maxLength, onChange }: ITextAreaProps) => {
     const [textAreaValue, setTextAreaValue] = useState<string>(value);
+    const [showToastOnce, setShowToastOnce] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (textAreaValue.length >= maxLength && !showToastOnce) {
+            showToast({ type: EToastType.ERROR, message: `응원은 ${maxLength}자 이하로 입력 가능합니다.` });
+            setShowToastOnce(true);
+        }
+    }, [textAreaValue, maxLength, showToastOnce]);
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
         setTextAreaValue(event.target.value);
+        setShowToastOnce(false);
         onChange(event);
     };
 

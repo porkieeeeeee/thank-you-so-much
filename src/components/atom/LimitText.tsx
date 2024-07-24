@@ -8,7 +8,7 @@ interface ILimitTextProps {
 const LimitText = ({ valueLength, maxLength }: ILimitTextProps) => {
     return (
         <Contianer>
-            <span>{valueLength}</span> / <span>{maxLength + 1}</span>
+            <span>{valueLength}</span> / <span>{maxLength}</span>
         </Contianer>
     );
 };

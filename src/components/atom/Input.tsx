@@ -1,12 +1,21 @@
 import styled from "@emotion/styled";
+import { useState } from "react";
 
 interface IInputProps {
     placeholder?: string;
-    value?: string;
+    value: string;
+    onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input = ({ placeholder, value }: IInputProps) => {
-    return <Container placeholder={placeholder} value={value} />;
+const Input = ({ placeholder, value, onChange }: IInputProps) => {
+    const [inputValue, setInputValue] = useState<string>(value);
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setInputValue(event.target.value);
+        onChange(event);
+    };
+
+    return <Container type='text' placeholder={placeholder} value={inputValue} onChange={handleChange} />;
 };
 
 const Container = styled.input`

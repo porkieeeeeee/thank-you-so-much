@@ -1,12 +1,21 @@
 import styled from "@emotion/styled";
+import { useState } from "react";
 
 interface ITextAreaProps {
     placeholder?: string;
-    value?: string;
+    value: string;
+    onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-const TextArea = ({ placeholder, value }: ITextAreaProps) => {
-    return <Container placeholder={placeholder} value={value} />;
+const TextArea = ({ placeholder, value, onChange }: ITextAreaProps) => {
+    const [textAreaValue, setTextAreaValue] = useState<string>(value);
+
+    const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+        setTextAreaValue(event.target.value);
+        onChange(event);
+    };
+
+    return <Container placeholder={placeholder} value={textAreaValue} onChange={handleChange} />;
 };
 
 const Container = styled.textarea`

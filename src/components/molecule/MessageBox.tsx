@@ -1,24 +1,24 @@
 import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import { getData } from "utils/functions/getData";
-import { IProductDataType } from "utils/interfaces/common";
+import { IComplimentDataType } from "utils/interfaces/common";
 import Message from "components/atom/Message";
 
 const MessageBox = () => {
-    const [productData, setProductData] = useState<IProductDataType[]>([]);
+    const [complimentData, setComplimentData] = useState<IComplimentDataType[]>([]);
 
     useEffect(() => {
         const fetchData = async () => {
             const data = await getData();
-            setProductData(data);
+            setComplimentData(data);
         };
         fetchData();
     }, []);
 
     return (
         <Container>
-            {productData.map((product) => (
-                <Message label={product.name} onClick={() => {}} />
+            {complimentData.map((compliment) => (
+                <Message label={compliment.nickname} onClick={() => {}} />
             ))}
         </Container>
     );

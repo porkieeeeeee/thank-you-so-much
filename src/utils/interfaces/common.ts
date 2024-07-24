@@ -1,4 +1,4 @@
-export interface IProductDataType {
-    name: string;
-    content: string;
+export interface IComplimentDataType {
+    nickname: string;
+    message: string;
 }

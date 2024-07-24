@@ -1,17 +1,22 @@
 import styled from "@emotion/styled";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { postData } from "utils/functions/postData";
 import Button from "components/atom/Button";
 import FormTitle from "components/atom/FormTitle";
-import { postData } from "utils/functions/postData";
 import Input from "components/atom/Input";
 import TextArea from "components/atom/TextArea";
 
 const FormLayout = () => {
     const [nickname, setNickname] = useState<string>("");
     const [message, setMessage] = useState<string>("");
+    const navigate = useNavigate();
 
-    const HandleClickSubmit = () => {
-        postData(nickname, message, setNickname, setMessage);
+    const HandleClickSubmit = async () => {
+        const success = await postData(nickname, message, setNickname, setMessage);
+        if (success) {
+            navigate("/");
+        }
     };
 
     return (
@@ -21,9 +26,17 @@ const FormLayout = () => {
                 <Input
                     placeholder='닉네임을 입력해주세요'
                     value={nickname}
+                    minLength={1}
+                    maxLength={5}
                     onChange={(e) => setNickname(e.target.value)}
                 />
-                <TextArea placeholder='ex. 포키 화이팅' value={message} onChange={(e) => setMessage(e.target.value)} />
+                <TextArea
+                    placeholder='ex. 포키 화이팅'
+                    value={message}
+                    minLength={1}
+                    maxLength={999}
+                    onChange={(e) => setMessage(e.target.value)}
+                />
             </Wrapper>
             <Button type='button' label='이얏호' onClick={HandleClickSubmit} />
         </Container>
@@ -45,7 +58,8 @@ const Container = styled.form`
 `;
 
 const Wrapper = styled.div`
-    input {
+    width: 100%;
+    div:first-of-type {
         margin-bottom: 20px;
     }
 `;

@@ -15,7 +15,10 @@ export const postData = async (
         });
         setNickname("");
         setMessage("");
+        console.log("쌈@뽕한 데이터 저장🥳🥳");
+        return true;
     } catch (error) {
         console.error("쌈@뽕한 에러 발생🥵🥵", error);
+        return false;
     }
 };

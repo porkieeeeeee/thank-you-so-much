@@ -38,7 +38,7 @@ const FormLayout = () => {
                     onChange={(e) => setMessage(e.target.value)}
                 />
             </Wrapper>
-            <Button type='button' label='이얏호' onClick={HandleClickSubmit} />
+            <Button type='button' label='응원 남기기' onClick={HandleClickSubmit} />
         </Container>
     );
 };

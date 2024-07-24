@@ -1,18 +1,31 @@
 import styled from "@emotion/styled";
+import { useEffect, useState } from "react";
 import Button from "components/atom/Button";
 import FormTitle from "components/atom/FormTitle";
+import { postData } from "utils/functions/postData";
 import Input from "components/atom/Input";
 import TextArea from "components/atom/TextArea";
 
 const FormLayout = () => {
+    const [nickname, setNickname] = useState<string>("");
+    const [message, setMessage] = useState<string>("");
+
+    const HandleClickSubmit = () => {
+        postData(nickname, message, setNickname, setMessage);
+    };
+
     return (
         <Container>
             <FormTitle label='응원 부탁드립니다.' />
             <Wrapper>
-                <Input placeholder='닉네임을 입력해주세요' />
-                <TextArea placeholder='ex. 포키 화이팅' />
+                <Input
+                    placeholder='닉네임을 입력해주세요'
+                    value={nickname}
+                    onChange={(e) => setNickname(e.target.value)}
+                />
+                <TextArea placeholder='ex. 포키 화이팅' value={message} onChange={(e) => setMessage(e.target.value)} />
             </Wrapper>
-            <Button label='이얏호' type='submit' onClick={() => {}} />
+            <Button type='button' label='이얏호' onClick={HandleClickSubmit} />
         </Container>
     );
 };

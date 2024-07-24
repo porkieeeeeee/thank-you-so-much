@@ -3,11 +3,16 @@ import loveLetter from "assets/icons/message-icon.svg";
 
 interface IMessageProps {
     label: string;
+    type: "button" | "submit" | "reset";
     onClick?: () => void;
 }
 
-const Message = ({ label, onClick }: IMessageProps) => {
-    return <Container onClick={onClick}>{label}</Container>;
+const Message = ({ label, type, onClick }: IMessageProps) => {
+    return (
+        <Container type={type} onClick={onClick}>
+            {label}
+        </Container>
+    );
 };
 
 const Container = styled.button`

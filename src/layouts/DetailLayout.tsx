@@ -1,6 +1,6 @@
 import styled from "@emotion/styled";
 import { IComplimentDataType } from "utils/interfaces/common";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Button from "components/atom/Button";
 import FormTitle from "components/atom/FormTitle";
 
@@ -9,6 +9,7 @@ const DetailLayout = ({ nickname, message }: IComplimentDataType) => {
 
     return (
         <Container>
+            <BackButton to={"/"}>{"<"} 뒤로가기</BackButton>
             <FormTitle strongLabel={nickname} label='님의 응원' />
             <Wrapper>{message}</Wrapper>
             <Button type='button' label='나도 응원하기' onClick={() => navigate("/register")} />
@@ -21,6 +22,7 @@ const Container = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: space-between;
+    position: relative;
     width: 500px;
     height: 600px;
     margin: 0 auto;
@@ -28,6 +30,13 @@ const Container = styled.div`
     border: 1px solid rgba(255, 255, 255, 0.8);
     border-radius: 20px;
     background-color: rgba(255, 255, 255, 0.3);
+`;
+
+const BackButton = styled(Link)`
+    position: absolute;
+    top: 25px;
+    left: 30px;
+    color: #fff;
 `;
 
 const Wrapper = styled.div`

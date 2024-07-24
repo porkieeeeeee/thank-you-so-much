@@ -2,10 +2,12 @@ import styled from "@emotion/styled";
 import { useEffect, useState } from "react";
 import { getData } from "utils/functions/getData";
 import { IComplimentDataType } from "utils/interfaces/common";
+import { useNavigate } from "react-router-dom";
 import Message from "components/atom/Message";
 
 const MessageBox = () => {
     const [complimentData, setComplimentData] = useState<IComplimentDataType[]>([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchData = async () => {
@@ -15,10 +17,17 @@ const MessageBox = () => {
         fetchData();
     }, []);
 
+    const handleMessageClick = (compliment: IComplimentDataType) => {
+        const queryParams = new URLSearchParams({
+            nickname: compliment.nickname,
+            message: compliment.message,
+        });
+        navigate(`/detail?${queryParams.toString()}`);
+    };
     return (
         <Container>
             {complimentData.map((compliment) => (
-                <Message label={compliment.nickname} onClick={() => {}} />
+                <Message label={compliment.nickname} type='button' onClick={() => handleMessageClick(compliment)} />
             ))}
         </Container>
     );

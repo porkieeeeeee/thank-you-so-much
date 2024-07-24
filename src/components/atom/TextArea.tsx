@@ -1,13 +1,16 @@
 import styled from "@emotion/styled";
 import { useState } from "react";
+import LimitText from "./LimitText";
 
 interface ITextAreaProps {
     placeholder?: string;
     value: string;
+    minLength: number;
+    maxLength: number;
     onChange: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 }
 
-const TextArea = ({ placeholder, value, onChange }: ITextAreaProps) => {
+const TextArea = ({ placeholder, value, minLength, maxLength, onChange }: ITextAreaProps) => {
     const [textAreaValue, setTextAreaValue] = useState<string>(value);
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -15,10 +18,27 @@ const TextArea = ({ placeholder, value, onChange }: ITextAreaProps) => {
         onChange(event);
     };
 
-    return <Container placeholder={placeholder} value={textAreaValue} onChange={handleChange} />;
+    return (
+        <Container>
+            <Item
+                placeholder={placeholder}
+                value={textAreaValue}
+                minLength={minLength}
+                maxLength={maxLength}
+                onChange={handleChange}
+            />
+            <LimitText valueLength={textAreaValue.length} maxLength={maxLength} />
+        </Container>
+    );
 };
 
-const Container = styled.textarea`
+const Container = styled.div`
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+`;
+
+const Item = styled.textarea`
     width: 100%;
     height: 220px;
     padding: 12px 14px;
@@ -31,6 +51,22 @@ const Container = styled.textarea`
 
     ::placeholder {
         color: rgba(255, 255, 255, 0.5);
+    }
+
+    ::-webkit-scrollbar {
+        width: 6px;
+        height: 6px;
+        border-radius: 3px;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        border-radius: 3px;
+        background-color: rgba(255, 255, 255, 0.5);
+    }
+
+    ::-webkit-scrollbar-track {
+        border-radius: 3px;
+        background-color: rgba(255, 255, 255, 0.2);
     }
 `;
 

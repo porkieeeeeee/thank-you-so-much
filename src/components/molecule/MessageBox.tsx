@@ -1,20 +1,25 @@
 import styled from "@emotion/styled";
+import { useEffect, useState } from "react";
+import { getData } from "utils/functions/getData";
+import { IProductDataType } from "utils/interfaces/common";
 import Message from "components/atom/Message";
 
 const MessageBox = () => {
+    const [productData, setProductData] = useState<IProductDataType[]>([]);
+
+    useEffect(() => {
+        const fetchData = async () => {
+            const data = await getData();
+            setProductData(data);
+        };
+        fetchData();
+    }, []);
+
     return (
         <Container>
-            <Message label='집에보내줘' />
-            <Message label='집에보내줘' />
-            <Message label='집에보내줘' />
-            <Message label='집에보내줘' />
-            <Message label='집에보내줘' />
-            <Message label='집에보내줘' />
-            <Message label='집에보내줘' />
-            <Message label='집에보내줘' />
-            <Message label='집에보내줘' />
-            <Message label='집에보내줘' />
-            <Message label='집에보내줘' />
+            {productData.map((product) => (
+                <Message label={product.name} onClick={() => {}} />
+            ))}
         </Container>
     );
 };

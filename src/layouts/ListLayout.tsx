@@ -9,7 +9,7 @@ const ListLayout = () => {
 
     return (
         <Container>
-            <FormTitle label='포키를 응원해주세요..!' />
+            <FormTitle label='칭찬은 포키도 춤추게 합니다.' />
             <MessageBox />
             <Button label='응원하기' type='button' onClick={() => navigate("/register")} />
         </Container>

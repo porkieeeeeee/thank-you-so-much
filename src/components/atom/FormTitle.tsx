@@ -20,6 +20,7 @@ const Container = styled.h2`
     font-size: 24px;
     font-weight: 600;
     line-height: 28px;
+    white-space: pre-wrap;
 
     span {
         color: #f2625e;

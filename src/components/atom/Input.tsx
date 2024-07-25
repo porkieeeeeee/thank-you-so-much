@@ -35,7 +35,7 @@ const Input = ({ placeholder, value, minLength, maxLength, onChange }: IInputPro
                 placeholder={placeholder}
                 value={inputValue}
                 minLength={minLength}
-                maxLength={maxLength - 1}
+                maxLength={maxLength}
                 onChange={handleChange}
             />
             <LimitText valueLength={inputValue.length} maxLength={maxLength} />

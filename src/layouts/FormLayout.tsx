@@ -2,6 +2,7 @@ import styled from "@emotion/styled";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { postData } from "utils/functions/postData";
+import JSConfetti from "js-confetti";
 import Button from "components/atom/Button";
 import FormTitle from "components/atom/FormTitle";
 import Input from "components/atom/Input";
@@ -11,7 +12,9 @@ import { EToastType, showToast } from "Toast";
 const FormLayout = () => {
     const [nickname, setNickname] = useState<string>("");
     const [message, setMessage] = useState<string>("");
+    const [success, setSuccess] = useState<boolean>(false);
     const navigate = useNavigate();
+    const confetti = new JSConfetti();
 
     const HandleClickSubmit = async () => {
         if (nickname.trim() === "" || message.trim() === "") {
@@ -19,10 +22,16 @@ const FormLayout = () => {
             return;
         }
 
-        const success = await postData(nickname, message, setNickname, setMessage);
-        if (success) {
+        const isSuccess = await postData(nickname, message, setNickname, setMessage);
+        setSuccess(isSuccess);
+        if (isSuccess) {
             navigate("/");
             showToast({ type: EToastType.SUCCESS, message: "응원해주셔서 감사합니다!" });
+            confetti.addConfetti({
+                emojis: ["🥳", "💖", "🌹", "🐷"],
+                emojiSize: 50,
+                confettiNumber: 100,
+            });
         }
     };
 

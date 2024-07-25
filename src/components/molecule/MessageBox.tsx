@@ -27,13 +27,15 @@ const MessageBox = () => {
     return (
         <Container>
             {complimentData.map((compliment) => (
-                <Message label={compliment.nickname} type='button' onClick={() => handleMessageClick(compliment)} />
+                <li>
+                    <Message label={compliment.nickname} type='button' onClick={() => handleMessageClick(compliment)} />
+                </li>
             ))}
         </Container>
     );
 };
 
-const Container = styled.div`
+const Container = styled.ul`
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     width: 100%;

@@ -12,7 +12,6 @@ import { EToastType, showToast } from "Toast";
 const FormLayout = () => {
     const [nickname, setNickname] = useState<string>("");
     const [message, setMessage] = useState<string>("");
-    const [success, setSuccess] = useState<boolean>(false);
     const navigate = useNavigate();
     const confetti = new JSConfetti();
 
@@ -22,9 +21,8 @@ const FormLayout = () => {
             return;
         }
 
-        const isSuccess = await postData(nickname, message, setNickname, setMessage);
-        setSuccess(isSuccess);
-        if (isSuccess) {
+        const success = await postData(nickname, message, setNickname, setMessage);
+        if (success) {
             navigate("/");
             showToast({ type: EToastType.SUCCESS, message: "응원해주셔서 감사합니다!" });
             confetti.addConfetti({

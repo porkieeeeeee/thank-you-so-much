@@ -11,22 +11,50 @@ interface IToastProps {
     message: string;
 }
 
+const hasShownToast = new Map<string, boolean>();
+
 export const showToast = ({ type, message }: IToastProps) => {
-    switch (type) {
-        case EToastType.SUCCESS:
-            toast.success(message);
-            break;
-        case EToastType.ERROR:
-            toast.error(message);
-            break;
-        default:
-            toast.info(message);
-            break;
+    const key = `${type}-${message}`;
+    if (!hasShownToast.get(key)) {
+        switch (type) {
+            case EToastType.SUCCESS:
+                toast.success(message, {
+                    onClose: () => {
+                        hasShownToast.delete(key);
+                    },
+                });
+                break;
+            case EToastType.ERROR:
+                toast.error(message, {
+                    onClose: () => {
+                        hasShownToast.delete(key);
+                    },
+                });
+                break;
+            default:
+                toast.info(message, {
+                    onClose: () => {
+                        hasShownToast.delete(key);
+                    },
+                });
+                break;
+        }
+        hasShownToast.set(key, true);
     }
 };
 
 const Toast = () => {
-    return <ToastContainer position='top-right' autoClose={2000} hideProgressBar closeOnClick theme='dark' limit={1} />;
+    return (
+        <ToastContainer
+            position='top-right'
+            autoClose={1000}
+            hideProgressBar
+            closeOnClick
+            pauseOnFocusLoss
+            theme='light'
+            limit={1}
+        />
+    );
 };
 
 export default Toast;
